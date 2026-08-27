@@ -16,3 +16,36 @@ def download_data(ticker, start, end, interval):
     )
 
     return data
+
+# data cleanup
+def clean_data(data):
+
+    #  removing column-axis name
+    data.columns.name = None
+
+    # ensuring the index is datetime and naming the index
+    data.index = pd.to_datetime(data.index)
+    data.index.name = "Date"
+
+    # ohlcv configuration
+    data = data[
+        [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Adj Close",
+            "Volume",
+            "Dividends",
+            "Stock Splits"
+        ]
+    ]
+
+    # sort data chronoligaclly
+    data = data.sort_index()
+
+    return data
+
+# saving the data
+def save_data_locally(ticker, data, location):
+    data.to_csv(f"{location}/{ticker}.csv")

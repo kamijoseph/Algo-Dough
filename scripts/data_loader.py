@@ -24,11 +24,13 @@ def clean_data(data):
     #  removing column-axis name
     data.columns = data.columns.get_level_values(0)
     data.columns.name = None
+    data.index = pd.to_datetime(data.index)
+    data.index.name = "Date"
     data = data.reset_index()
 
     # ohlcv configuration
     data = data[
-        [
+        [   "Date"
             "Open",
             "High",
             "Low",

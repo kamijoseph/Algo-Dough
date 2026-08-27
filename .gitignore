@@ -3,7 +3,7 @@ __pycache__/
 *.py[codz]
 *$py.class
 
-Data/
+data/
 test.py
 
 # C extensions

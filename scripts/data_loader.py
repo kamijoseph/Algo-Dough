@@ -30,7 +30,8 @@ def clean_data(data):
 
     # ohlcv configuration
     data = data[
-        [   "Date"
+        [   
+            "Date",
             "Open",
             "High",
             "Low",

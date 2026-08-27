@@ -24,10 +24,6 @@ def clean_data(data):
     #  removing column-axis name
     data.columns = data.columns.get_level_values(0)
     data.columns.name = None
-
-    # ensuring the index is datetime and naming the index
-    data.index = pd.to_datetime(data.index)
-    data.index.name = "Date"
     data = data.reset_index()
 
     # ohlcv configuration
@@ -43,9 +39,6 @@ def clean_data(data):
             "Stock Splits"
         ]
     ]
-
-    # sort data chronoligaclly
-    data = data.sort_index()
 
     return data
 

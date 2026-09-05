@@ -75,4 +75,9 @@ def rsi(data: pd.DataFrame):
     rs = avg_gain / avg_loss
     rsi = 100 - (100 / (1 + rs))
 
+    # comments from past kami: 
+    # when plotting add reference levekls, preffarably 30 and 70
+    # pd.Series(30, index=data.index)
+    #  you will need them as visual reference levels
+    
     return rsi

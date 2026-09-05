@@ -79,5 +79,23 @@ def rsi(data: pd.DataFrame):
     # when plotting add reference levekls, preffarably 30 and 70
     # pd.Series(30, index=data.index)
     #  you will need them as visual reference levels
-    
+
     return rsi
+
+# average true range
+def atr(data: pd.DataFrame):
+
+    previous_close = data["Close"].shift(1)
+
+    tr1 = data["High"] - data["Low"]
+    tr2 = (data["High"] - previous_close).abs()
+    tr3 = (data["Low"] - previous_close).abs()
+
+    true_range = pd.concat(
+        [tr1, tr2, tr3],
+        axis = 1,
+    ).max(axis = 1)
+
+    atr_14 = true_range.rolling(14).mean()
+
+    return atr_14

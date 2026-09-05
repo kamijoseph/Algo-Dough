@@ -60,3 +60,19 @@ def macd(data: pd.DataFrame) -> int:
     macd_hist = macd - macd_signal
 
     return macd, macd_signal, macd_hist
+
+# relative strength index
+def rsi(data: pd.DataFrame):
+
+    delta = data["Close"].diff()
+
+    gain = delta.clip(lower = 0)
+    loss = delta.clip(upper = 0)
+
+    avg_gain = gain.rolling(14).mean()
+    avg_loss = loss.rolling(14).mean()
+
+    rs = avg_gain / avg_loss
+    rsi = 100 - (100 / (1 + rs))
+
+    return rsi

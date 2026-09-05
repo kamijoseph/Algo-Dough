@@ -28,18 +28,18 @@ def moving_averages(data: pd.DataFrame) -> pd.DataFrame:
     return data
 
 # bollinger bands
-def bollinger_bands(data: pd.DataFrame) -> pd.DataFrame:
+def bollinger_bands(data: pd.DataFrame) -> int:
 
-    data["BB_Middle"] = data["Close"].rolling(20).mean()
-    data["BB_Std"] = data["Close"].rolling(20).std()
-    data["BB_Upper"] = (
-        data["BB_Middle"] + 2 * data["BB_Std"]
+    bb_middle = data["Close"].rolling(20).mean()
+    bb_std = data["Close"].rolling(20).std()
+    bb_upper = (
+        bb_middle + 2 * bb_std
     )
-    data["BB_Upper"] = (
-        data["BB_Middle"] - 2 * data["BB_Std"]
+    bb_lower = (
+        bb_middle - 2 * bb_std
     )
 
-    return data
+    return bb_upper, bb_lower
 
 # macd
 def macd(data: pd.DataFrame) -> int:

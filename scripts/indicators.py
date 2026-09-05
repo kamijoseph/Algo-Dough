@@ -1,6 +1,9 @@
 
 # indicators scripts
-def moving_averages(data):
+import pandas as pd
+
+
+def moving_averages(data: pd.DataFrame) -> pd.DataFrame:
 
     # sma 20
     data["SMA_20"] = data["Close"].rolling(20).mean()
@@ -21,5 +24,19 @@ def moving_averages(data):
             span = 50,
             adjust = False
         ).mean()
+
+    return data
+
+# bollinger bands
+def bollinger_bands(data: pd.DataFrame) -> pd.DataFrame:
+
+    data["BB_Middle"] = data["Close"].rolling(20).mean()
+    data["BB_Std"] = data["Close"].rolling(20).std()
+    data["BB_Upper"] = (
+        data["BB_Middle"] + 2 * data["BB_Std"]
+    )
+    data["BB_Upper"] = (
+        data["BB_Middle"] - 2 * data["BB_Std"]
+    )
 
     return data

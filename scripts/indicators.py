@@ -3,29 +3,27 @@
 import pandas as pd
 
 
-def moving_averages(data: pd.DataFrame) -> pd.DataFrame:
+def simple_moving_averages(data: pd.DataFrame):
 
-    # sma 20
-    data["SMA_20"] = data["Close"].rolling(20).mean()
+    sma_20 = data["Close"].rolling(20).mean()
+    sma_50 = data["Close"].rolling(50).mean()
+    sma_200 = data["Close"].rolling(200).mean()
 
-    # sma 50
-    data["SMA_50"] = data["Close"].rolling(50).mean()
+    return sma_20, sma_50, sma_200
 
-    # sma 200
-    data["SMA_200"] = data["Close"].rolling(200).mean()
-
-    # ema 20
-    data["EMA_20"] = data["Close"].ewm(
+def exponential_moving_averages(data: pd.DataFrame):
+        
+    ema_20 = data["Close"].ewm(
         span = 20,
         adjust = False
     ).mean()
 
-    data["EMA_50"] = data["Close"].ewm(
+    ema_50 = data["Close"].ewm(
             span = 50,
             adjust = False
         ).mean()
 
-    return data
+    return ema_20, ema_50
 
 # bollinger bands
 def bollinger_bands(data: pd.DataFrame) -> int:
@@ -39,7 +37,7 @@ def bollinger_bands(data: pd.DataFrame) -> int:
         bb_middle - 2 * bb_std
     )
 
-    return bb_upper, bb_lower
+    return bb_middle, bb_upper, bb_lower
 
 # macd
 def macd(data: pd.DataFrame) -> int:

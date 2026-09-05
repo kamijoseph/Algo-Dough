@@ -40,3 +40,25 @@ def bollinger_bands(data: pd.DataFrame) -> pd.DataFrame:
     )
 
     return data
+
+# macd
+def macd(data: pd.DataFrame) -> int:
+
+    ema_12 = data["Close"].ewm(
+        span = 12,
+        adjust = False
+    ).mean()
+
+    ema_26 = data["close"].ewm(
+        span = 26,
+        adjust = False
+    ).mean()
+
+    macd = ema_12 - ema_26
+    macd_signal = macd.ewm(
+        span = 9,
+        adjust = False
+    )
+    macd_hist = macd - macd_signal
+
+    return macd, macd_signal, macd_hist

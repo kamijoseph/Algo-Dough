@@ -100,20 +100,3 @@ def atr(data: pd.DataFrame):
     atr_14 = true_range.rolling(14).mean()
 
     return atr_14
-
-# swing points
-def find_swing_points(data: pd.DataFrame, distance:int, prominence=None):
-
-    high_indices, _ = find_peaks(
-        data["High"].values,
-        distance = distance,
-        prominence = prominence
-    )
-
-    low_indices, _ = find_peaks(
-        -data["Low"].values,
-        distance = distance,
-        prominence = prominence
-    )
-
-    return high_indices, low_indices

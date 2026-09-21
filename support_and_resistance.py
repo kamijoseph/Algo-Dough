@@ -55,8 +55,22 @@ def cluster_levels(levels, tolerance=0.01):
 
 
 # finding highs and lows indices
-high_indices, low_indices = find_swing_points(
+
+
+def main():
+
+    # dinding high and low indices
+    high_indices, low_indices = find_swing_points(
+
     data = data,
     distance = 10,
     prominence = 1.0
-)
+
+    )
+
+    # swing highs and swing lows
+    swing_highs = data["High"].iloc[high_indices]
+    swing_lows = data["Low"].iloc[low_indices]
+
+if __name__ == "__main__":
+    main()

@@ -72,5 +72,29 @@ def main():
     swing_highs = data["High"].iloc[high_indices]
     swing_lows = data["Low"].iloc[low_indices]
 
+    # resistance zones
+    resistance_zones = cluster_levels(
+        swing_highs.tolist(),
+        tolerance = 0.01
+    )
+
+    # support zones
+    support_zones = cluster_levels(
+        swing_lows.tolist(),
+        tolerance = 0.01
+    )
+
+    # filtering to meaningful zones:  a level has to be encountered twice
+    resistance_zones = [
+    zone for zone in resistance_zones
+    if zone["touches"] >= 2
+    ]
+
+    support_zones = [
+        zone for zone in support_zones
+        if zone["touches"] >= 2
+    ]
+
+
 if __name__ == "__main__":
     main()

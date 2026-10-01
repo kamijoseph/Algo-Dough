@@ -1,5 +1,9 @@
+
+# main scritp
+
 def main():
-    print("Hello from fate-algorithm!")
+
+    print("<---------- ALGO DOUGH FATE ALGORITHM ---------->")
 
 
 if __name__ == "__main__":

@@ -36,10 +36,7 @@ def clean_data(data):
             "High",
             "Low",
             "Close",
-            "Adj Close",
-            "Volume",
-            "Dividends",
-            "Stock Splits"
+            "Volume"
         ]
     ]
 
@@ -67,7 +64,13 @@ def main():
     )
 
     print(f"{ticker} data shape: {data.shape}\n")
-    print(f"head: \n {data.head()}")
+    print(f"head: \n {data.head()}\n\n")
+
+    # cleaned data
+    cleaned_data = clean_data(data)
+
+    print(f"{ticker} data shape: {cleaned_data.shape}\n")
+    print(f"head: \n {cleaned_data.head()}")
 
 if __name__ == "__main__":
     main()

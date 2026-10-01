@@ -48,3 +48,10 @@ def clean_data(data):
 # saving the data
 def save_data_locally(data, location, ticker):
     data.to_csv(f"{location}/{ticker}.csv")
+
+def main():
+
+    print("<===== DATA LOADER INITIALIZED ...... =====>")
+
+if __name__ == "__main__":
+    main()

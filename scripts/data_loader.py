@@ -43,8 +43,8 @@ def clean_data(data):
     return data
 
 # saving the data
-def save_data_locally(data, location, ticker):
-    data.to_csv(f"{location}/{ticker}.csv")
+def save_data_locally(data, path, ticker):
+    data.to_csv(f"{path}/{ticker}.csv")
 
 def main():
 
@@ -72,9 +72,16 @@ def main():
     print(f"cleaned data head(5): \n {cleaned_data.head()}")
 
     # saving the cleaned data
-    save_data = input("would you like to save the data locally: (yesy/no): ")
+    save_data = input("\n\nwould you like to save the data locally: (yes/no): ")
     if save_data == "yes":
-        save_data_locally(cleaned_data)
+
+        path = input("enter the path to save: ")
+        save_data_locally(
+            cleaned_data,
+            path,
+            ticker
+        )
+
     else:
         print("data not saved!")
 

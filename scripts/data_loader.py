@@ -53,5 +53,21 @@ def main():
 
     print("<===== DATA LOADER INITIALIZED ...... =====>")
 
+    ticker = input("enter ticker: ")
+    start = input("enter start date (format: '2025-08-30'): ")
+    end = input("enter your end. (format: '2026-09-30'): ")
+    interval = input("enter interval. (format: '1D): ")
+
+    # downloading data
+    data = download_data(
+        ticker = ticker,
+        start = start,
+        end = end,
+        interval = interval
+    )
+
+    print(f"{ticker} data shape: {data.shape}\n")
+    print(f"head: \n {data.head()}")
+
 if __name__ == "__main__":
     main()

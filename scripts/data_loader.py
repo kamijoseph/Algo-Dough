@@ -63,14 +63,21 @@ def main():
         interval = interval
     )
 
-    print(f"{ticker} data shape: {data.shape}\n")
-    print(f"head: \n {data.head()}\n\n")
+    print(f"{ticker} raw data shape: {data.shape}\n")
+    print(f"raw data head(5): \n {data.head()}\n\n")
 
     # cleaned data
     cleaned_data = clean_data(data)
+    print(f"{ticker} cleaned data shape: {cleaned_data.shape}\n")
+    print(f"cleaned data head(5): \n {cleaned_data.head()}")
 
-    print(f"{ticker} data shape: {cleaned_data.shape}\n")
-    print(f"head: \n {cleaned_data.head()}")
+    # saving the cleaned data
+    save_data = input("would you like to save the data locally: (yesy/no): ")
+    if save_data == "yes":
+        save_data_locally(cleaned_data)
+    else:
+        print("data not saved!")
+
 
 if __name__ == "__main__":
     main()

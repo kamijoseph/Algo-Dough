@@ -44,7 +44,7 @@ def clean_data(data):
 
 # saving the data
 def save_data_locally(data, path, ticker):
-    data.to_csv(f"{path}/{ticker}.csv")
+    data.to_csv(f"{path}/{ticker}.csv", index=False)
 
 def main():
 

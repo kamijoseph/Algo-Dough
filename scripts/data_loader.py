@@ -24,14 +24,13 @@ def clean_data(data):
     #  removing column-axis name
     data.columns = data.columns.get_level_values(0)
     data.columns.name = None
+
     data.index = pd.to_datetime(data.index)
     data.index.name = "Date"
-    data = data.reset_index()
 
     # ohlcv configuration
     data = data[
         [   
-            "Date",
             "Open",
             "High",
             "Low",
@@ -44,7 +43,7 @@ def clean_data(data):
 
 # saving the data
 def save_data_locally(data, path, ticker):
-    data.to_csv(f"{path}/{ticker}.csv", index=False)
+    data.to_csv(f"{path}/{ticker}.csv")
 
 def main():
 

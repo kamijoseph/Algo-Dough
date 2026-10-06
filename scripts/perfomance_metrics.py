@@ -2,6 +2,7 @@
 # perfomance metrics
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 def perfomance_metrics(results: pd.DataFrame) -> pd.Series:
 
@@ -36,3 +37,24 @@ def perfomance_metrics(results: pd.DataFrame) -> pd.Series:
             "Max Drawdown": max_drawdown
         }
     )
+
+# plotting equity urve
+def equity_curve(results: pd.DataFrame):
+
+    plt.figure(
+        figsize = (14, 6)
+    )
+
+    plt.plot(
+        results.index,
+        results["Equity"],
+        label = "Strategy"
+    )
+
+    plt.title("Strategy Equity Curve")
+    plt.xlabel("Date")
+    plt.ylabel("Equity")
+    plt.legend()
+    plt.grid(True)
+
+    plt.show()

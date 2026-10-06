@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-def perfomance_metrics(results: pd.DataFrame) -> pd.Series:
+def perfomance_metric(results: pd.DataFrame) -> pd.Series:
 
     returns = results["Strategy_Return"].dropna()
     total_return = results["Equity"].iloc[-1] - 1

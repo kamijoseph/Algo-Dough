@@ -14,7 +14,7 @@ def pips_calculator(
 # kamis risk management
 def kamis_risk(
         current_equity: float,
-        base_risk_management: float,
+        base_risk_pct: float,
         loss_streak: int,
         rr_ratio: float = 2.0,
         max_consq_losses: int = 3
@@ -24,7 +24,7 @@ def kamis_risk(
     if current_equity <= 0:
         raise ValueError("current equity must be greater zero brokie")
 
-    if base_risk_management <= 0:
+    if base_risk_pct <= 0:
         raise ValueError("base risk management must be greater than zero")
 
     if loss_streak < 0:
@@ -47,3 +47,17 @@ def kamis_risk(
             "reward_amount": 0.0,
             "rr_ratio": rr_ratio,
         }
+
+    # risk reduction by n / 2, n / 4
+    risk_pct = base_risk_pct / (2 ** loss_streak)
+    risk_amount = current_equity * (risk_pct / 100)
+    reward_amount = risk_amount * rr_ratio
+
+    return {
+        "trading_allowed": True,
+        "loss_streak": loss_streak,
+        "risk_percentage": risk_pct,
+        "risk_amount": risk_amount,
+        "reward_amount": reward_amount,
+        "rr_ratio": rr_ratio,
+    }

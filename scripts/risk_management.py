@@ -37,3 +37,13 @@ def kamis_risk(
         raise ValueError("max consecutive losses must be greater than zero")
 
     # stop trading after maximum consecutive losses
+    if loss_streak >= max_consq_losses:
+
+        return {
+            "trading_allowed": False,
+            "loss_streak": loss_streak,
+            "risk_percentage": 0.0,
+            "risk_amount": 0.0,
+            "reward_amount": 0.0,
+            "rr_ratio": rr_ratio,
+        }

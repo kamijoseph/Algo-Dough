@@ -12,5 +12,11 @@ def pips_calculator(
     return (exit - entry) / pip_size
 
 # kamis risk management
-def kamis_risk():
+def kamis_risk(
+        current_equity: float,
+        base_risk_management: float,
+        loss_streak: int,
+        rr_ratio: float = 2.0,
+        max_consq_loss: int = 3
+) -> dict:
     pass

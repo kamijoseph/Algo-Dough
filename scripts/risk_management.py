@@ -17,6 +17,23 @@ def kamis_risk(
         base_risk_management: float,
         loss_streak: int,
         rr_ratio: float = 2.0,
-        max_consq_loss: int = 3
+        max_consq_losses: int = 3
 ) -> dict:
-    pass
+
+    # validation
+    if current_equity <= 0:
+        raise ValueError("current equity must be greater zero brokie")
+
+    if base_risk_management <= 0:
+        raise ValueError("base risk management must be greater than zero")
+
+    if loss_streak < 0:
+        raise ValueError("loss streak cannot be negative")
+
+    if rr_ratio <= 0:
+        raise ValueError("risk to reward ratio must be greater than zero")
+
+    if max_consq_losses <= 0:
+        raise ValueError("max consecutive losses must be greater than zero")
+
+    # stop trading after maximum consecutive losses

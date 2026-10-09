@@ -61,3 +61,16 @@ def kamis_risk(
         "reward_amount": reward_amount,
         "rr_ratio": rr_ratio,
     }
+
+def main():
+
+    result = kamis_risk(
+        current_equity = 10_000,
+        base_risk_pct=2.0,
+        loss_streak=0
+    )
+
+    print(result)
+
+if __name__ == "__main__":
+    main()

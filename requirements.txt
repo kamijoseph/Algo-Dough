@@ -9,3 +9,4 @@ mplfinance
 scipy
 requests
 python-dotenv
+oandapyV20

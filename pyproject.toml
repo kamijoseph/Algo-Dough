@@ -9,6 +9,7 @@ dependencies = [
     "matplotlib>=3.11.1",
     "mplfinance>=0.12.10b0",
     "numpy>=2.5.2",
+    "oandapyv20>=0.7.2",
     "pandas>=3.0.5",
     "python-dotenv>=1.2.4",
     "requests>=2.34.2",

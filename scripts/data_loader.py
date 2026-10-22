@@ -16,8 +16,8 @@ TWELVE_API = os.getenv("TWELVE_DATA_API")
 TWELVE_API_URL = os.getenv("TWELVE_URL")
 
 
-# downloading the data
-def download_yfinance_data(ticker, start, end, interval):
+# downloading the data: yahoo finance block
+def yfinance_data(ticker, start, end, interval):
     data = yf.download(
         ticker,
         start = start,
@@ -34,6 +34,38 @@ def download_yfinance_data(ticker, start, end, interval):
         )
 
     return data
+
+# downloading data: twelve data downloader
+def twelve_data(ticker, start, end, interval):
+
+    if not TWELVE_API:
+        raise ValueError(
+            "[-] missing twelve data api key in the .env file"
+        )
+
+    # interval map
+    interval_map = {
+        "1m": "1min",
+        "5m": "5min",
+        "15m": "15min",
+        "30m": "30min",
+        "45m": "45min",
+        "1h": "1h",
+        "2h": "2h",
+        "4h": "4h",
+        "8h": "8h",
+        "1d": "1day",
+        "1D": "1day",
+        "1day": "1day",
+        "1wk": "1week",
+        "1mo": "1month",
+    }
+    td_interval= interval_map.get(interval, interval)
+
+    
+
+
+
 
 # data cleanup
 def clean_data(data):

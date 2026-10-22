@@ -1,8 +1,14 @@
 
 # download data from yfinance script
 
+import os
+from pathlib import Path
+
+import requests
 import yfinance as yf
 import pandas as pd
+
+from dotenv import load_dotenv
 
 
 # downloading the data

@@ -212,7 +212,7 @@ def save_data_locally(data, path, ticker):
     output_file = output_dir / f"{filename}.csv"
 
     data.to_csv(output_file)
-    
+
     print(
         f"[+] data saved to: {output_file}"
     )
@@ -221,40 +221,55 @@ def main():
 
     print("<===== DATA LOADER INITIALIZED ...... =====>")
 
-    ticker = input("enter ticker: ")
-    start = input("enter start date (format: '2025-08-30'): ")
-    end = input("enter your end. (format: '2026-09-30'): ")
-    interval = input("enter interval. (format: '1D): ")
+    provider = input(
+        "[+] choose provider (tfinance/twelvedata): "
+    ).strip().lower()
+
+    ticker = input("enter ticker/symbol: ").strip()
+    start = input("enter start date (YYYY-MM-DD): ").strip()
+    end = input("enter your end date (YYYY-MM-DD): ").strip()
+    interval = input("enter interval (example. 1h, 1d, 15m): ").strip()
 
     # downloading data
-    data = download_data(
-        ticker = ticker,
-        start = start,
-        end = end,
-        interval = interval
-    )
-
-    print(f"{ticker} raw data shape: {data.shape}\n")
-    print(f"raw data head(5): \n {data.head()}\n\n")
-
-    # cleaned data
-    cleaned_data = clean_data(data)
-    print(f"{ticker} cleaned data shape: {cleaned_data.shape}\n")
-    print(f"cleaned data head(5): \n {cleaned_data.head()}")
-
-    # saving the cleaned data
-    save_data = input("\n\nwould you like to save the data locally: (yes/no): ")
-    if save_data == "yes":
-
-        path = input("enter the path to save: ")
-        save_data_locally(
-            cleaned_data,
-            path,
-            ticker
+    try:
+        data = download_data(
+            ticker = ticker,
+            start = start,
+            end = end,
+            interval = interval,
+            provider = provider
         )
 
-    else:
-        print("data not saved!")
+        print(f"{ticker} raw data shape: {data.shape}\n")
+        print(f"raw data head(5): \n {data.head()}\n\n")
+
+        # cleaned data
+        cleaned_data = clean_data(data)
+        print(f"{ticker} cleaned data shape: {cleaned_data.shape}\n")
+        print(f"cleaned data head(5): \n {cleaned_data.head()}")
+
+        # saving the cleaned data
+        save_choice = input("\n\nwould you like to save the data locally: (yes[y]/no[n]): ").strip().lower()
+        if save_choice in ["yes", "y"]:
+
+            path = input("enter the path to save: ").strip()
+            save_data_locally(
+                cleaned_data,
+                path,
+                ticker
+            )
+
+        else:
+            print("[-] data not saved!")
+
+    except (
+        ValueError,
+        RuntimeError,
+        requests.RequestException
+    ) as e:
+        print(
+            f"\n[ERROR] data loader error: {e}"
+        )
 
 
 if __name__ == "__main__":

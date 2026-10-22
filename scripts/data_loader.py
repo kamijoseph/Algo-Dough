@@ -73,6 +73,59 @@ def twelve_data(ticker, start, end, interval):
         "apikey": TWELVE_DATA_KEY,
     }
 
+    response = requests.get(
+        TWELVE_DATA_URL,
+        params = params,
+        timeout = 30
+    )
+    response.raise_for_status()
+
+    result = response.json()
+
+    if "values" not in result:
+        raise RuntimeError(
+            f"[ERROR] twelve data API error: {result}"
+        )
+
+    data = pd.DataFrame(result["values"])
+    if data.empty:
+        raise ValueError(
+            f"[ERROR] no twelve data records returned for {symbol}"
+        )
+
+    # parsee timestamps as utc
+    data["datetime"] = pd.to_datetime(
+        data["datetime"],
+        utc = True,
+        errors = "raise"
+    )
+    data = data.set_index("datetime")
+    data.index_name = "Date"
+
+    # prices and volumes to numerics
+    for column in ["open", "high", "low", "close", "volume"]:
+        if column in data.columns:
+            data[column] = pd.to_numeric(
+                data[column],
+                errors = "raise"
+            )
+
+    
+    # matching columns names expected by data cleaener
+    data = data.rename(
+        columns={
+            "open": "Open",
+            "high": "High",
+            "low": "Low",
+            "close": "Close",
+            "volume": "Volume",
+        }
+    )
+
+    return data.sort_index()
+
+def download_data():
+    pass
 
 
 

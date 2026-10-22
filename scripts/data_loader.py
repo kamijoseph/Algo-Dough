@@ -10,6 +10,11 @@ import pandas as pd
 
 from dotenv import load_dotenv
 
+load_dotenv()
+
+TWELVE_API = os.getenv("TWELVE_DATA_API")
+TWELVE_API_URL = os.getenv("TWELVE_URL")
+
 
 # downloading the data
 def download_data(ticker, start, end, interval):

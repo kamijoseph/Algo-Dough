@@ -124,20 +124,56 @@ def twelve_data(ticker, start, end, interval):
 
     return data.sort_index()
 
-def download_data():
-    pass
+def download_data(ticker, start, end, interval, provider):
+
+    provider = provider.strip().lower()
+
+    if provider == "yfinance":
+        return yfinance_data(
+            ticker, start, end, interval
+        )
+    
+    elif provider == "twelvedata":
+        return twelve_data(
+            ticker, start, end, interval
+        )
+
+    else:
+        raise ValueError(
+            "[ERROR] provider must be [yfinance] or [twelvedata]"
+        )
 
 
 
 # data cleanup
 def clean_data(data):
 
+    data = data.copy()
+
     #  removing column-axis name
-    data.columns = data.columns.get_level_values(0)
+    if isinstance(data.columns, pd.MultiIndex):
+        data.columns = data.columns.get_level_values(0)
+
     data.columns.name = None
 
     data.index = pd.to_datetime(data.index)
     data.index.name = "Date"
+
+    required_columns = ["Open", "High", "Low", "Close"]
+
+    missing = [
+        column for column in required_columns
+        if column not in data.columns
+    ]
+
+    if missing:
+        raise ValueError(
+            f"[ERROR] missing required columns: {missing}"
+        )
+
+    # volume unavailbale in some vendors
+    if "Volume" not in data.columns:
+        data["Volume"] = float("nan")
 
     # ohlcv configuration
     data = data[
@@ -150,7 +186,22 @@ def clean_data(data):
         ]
     ]
 
-    return data
+    # removing ibalids
+    data = data.dropna(
+        subset = [
+            "Open",
+            "High",
+            "Low",
+            "Close"
+        ]
+    )
+
+    # duplicate time stamps
+    data = data[
+        ~data.index.duplicated(keep="last")
+    ]
+
+    return data.sort_index()
 
 # saving the data
 def save_data_locally(data, path, ticker):

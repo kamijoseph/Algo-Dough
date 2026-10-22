@@ -17,15 +17,21 @@ TWELVE_API_URL = os.getenv("TWELVE_URL")
 
 
 # downloading the data
-def download_data(ticker, start, end, interval):
+def download_yfinance_data(ticker, start, end, interval):
     data = yf.download(
         ticker,
         start = start,
         end = end,
         interval = interval,
         auto_adjust = False,
-        actions = True
+        actions = True,
+        progress = False
     )
+
+    if data.empty:
+        raise ValueError(
+            f"[-] no yahoo finace data returned"
+        )
 
     return data
 

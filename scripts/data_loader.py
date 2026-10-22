@@ -12,8 +12,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-TWELVE_API = os.getenv("TWELVE_DATA_API")
-TWELVE_API_URL = os.getenv("TWELVE_URL")
+TWELVE_DATA_KEY = os.getenv("TWELVE_DATA_API")
+TWELVE_DATA_URL = os.getenv("TWELVE_URL")
 
 
 # downloading the data: yahoo finance block
@@ -38,7 +38,7 @@ def yfinance_data(ticker, start, end, interval):
 # downloading data: twelve data downloader
 def twelve_data(ticker, start, end, interval):
 
-    if not TWELVE_API:
+    if not TWELVE_DATA_KEY:
         raise ValueError(
             "[-] missing twelve data api key in the .env file"
         )
@@ -62,7 +62,16 @@ def twelve_data(ticker, start, end, interval):
     }
     td_interval= interval_map.get(interval, interval)
 
-    
+    symbol = ticker.replace("-", "/").upper()
+    params = {
+        "symbol": symbol,
+        "interval": td_interval,
+        "start_date": start,
+        "end_date": end,
+        "timezone": "UTC",
+        "order": "asc",
+        "apikey": TWELVE_DATA_KEY,
+    }
 
 
 

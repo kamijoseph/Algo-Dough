@@ -205,7 +205,17 @@ def clean_data(data):
 
 # saving the data
 def save_data_locally(data, path, ticker):
-    data.to_csv(f"{path}/{ticker}.csv")
+
+    output_dir = Path(path)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    filename = ticker.replace("/", "-").replace("\\", "_")
+    output_file = output_dir / f"{filename}.csv"
+
+    data.to_csv(output_file)
+    
+    print(
+        f"[+] data saved to: {output_file}"
+    )
 
 def main():
 
